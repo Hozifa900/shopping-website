@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Product {
 
-    private Integer number;
+    private int number;
     private String name;
     private String description;
     private double price;
