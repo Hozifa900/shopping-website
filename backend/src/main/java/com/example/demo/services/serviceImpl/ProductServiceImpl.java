@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void removeProduct(int productId) {
-        productRepository.deleteById(productId);
+        productRepository.deleteByNumber(productId);
 
     }
 
@@ -43,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findBy(productNumber);
         if (product != null) {
             List<Review> reviews = new ArrayList<>();
+            if (productDto.reviews() != null) {
             productDto.reviews().forEach(review -> {
                 reviews.add(new Review(
                         review.name(),
@@ -51,6 +52,7 @@ public class ProductServiceImpl implements ProductService {
 
                 ));
             });
+        }
             product = new Product(
                     productDto.number(),
                     productDto.name(),
