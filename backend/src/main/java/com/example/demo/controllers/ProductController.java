@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import java.util.*;
+
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +23,13 @@ public class ProductController {
     @PostMapping("")
     public ResponseEntity<?> addProduct(@RequestBody ProductDto productDto) {
         ProductDto newProduct = productService.addProduct(productDto);
-        return new ResponseEntity<ProductDto>(newProduct, HttpStatus.OK);
+        Map<String, Object> response = new HashMap();
+        response.put("success", true);
+        response.put("message", "Product added successfully");
+        response.put("status", Response.SC_OK);
+        response.put("data", newProduct);
+
+        return new ResponseEntity<Map>(response, HttpStatus.OK);
 
     }
 
