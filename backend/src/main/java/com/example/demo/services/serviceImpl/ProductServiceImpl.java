@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto updateProduct(ProductDto productDto, int productNumber) {
-        Product product = productRepository.findBy(productNumber);
+        Product product = productRepository.findByNumber(productNumber);
         if (product != null) {
             List<Review> reviews = new ArrayList<>();
             if (productDto.reviews() != null) {
@@ -100,8 +100,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ReviewDto addReviewToProduct(int productId, ReviewDto reviewDto) {
-        Product product = productRepository.findBy(productId);
+    public ReviewDto addReviewToProduct(int productNumber, ReviewDto reviewDto) {
+        Product product = productRepository.findByNumber(productNumber);
         if (product != null) {
 
             product.addReview(new Review(

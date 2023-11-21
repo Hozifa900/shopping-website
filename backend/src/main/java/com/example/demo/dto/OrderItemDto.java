@@ -1,7 +1,7 @@
 package com.example.demo.dto;
 
 public record OrderItemDto(
-        String productId,
+        Integer productId,
         String name,
         Double price,
         Integer quantity,

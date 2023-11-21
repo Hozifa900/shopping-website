@@ -51,7 +51,7 @@ public class ProductController {
         return new ResponseEntity<Map>(response, HttpStatus.OK);}
 
 
-        @PostMapping("/addReview")
+        @PostMapping("/{productNumber}")
         public ResponseEntity<?> addReview(@RequestBody ReviewDto reviewDto,@PathVariable int productNumber) {
     
             ReviewDto newReview = productService.addReviewToProduct(productNumber, reviewDto);

@@ -16,11 +16,15 @@ public class Order {
     public Order() {
     }
 
-    public Order(String status, List<OrderItem> OrderItems, User user, PaymentInfo paymentInfo) {
+    public Order(String status,  User user, PaymentInfo paymentInfo,List<OrderItem> OrderItems) {
         this.status = status;
         this.OrderItems = OrderItems;
         this.user = user;
         this.paymentInfo = paymentInfo;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getStatus() {
