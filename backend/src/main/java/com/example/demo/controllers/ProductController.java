@@ -25,4 +25,11 @@ public class ProductController {
 
     }
 
+    // @GetMapping("")
+    // public ResponseEntity<?> getProducts() {
+    //     List<ProductDto> products = productService.getProducts();
+    //     Map<String, > response = new HashMap<>();
+    //     return new ResponseEntity<List<ProductDto>>(products, HttpStatus.OK);
+    // }
+
 }
