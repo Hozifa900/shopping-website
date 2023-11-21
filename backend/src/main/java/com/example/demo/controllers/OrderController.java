@@ -45,21 +45,24 @@ public class OrderController {
         orderService.updateOrderStatus(status, orderId);
         Map<String, Object> response = new HashMap();
         response.put("success", true);
-        response.put("message", "Order updated successfully");
+        response.put("message", "Order status updated successfully");
         response.put("status", Response.SC_OK);
-        return new ResponseEntity<Map>(HttpStatus.OK);
+        response.put("data", "");
+        return new ResponseEntity<Map>(response,HttpStatus.OK);
         
     }
  
     @PostMapping("")
     public ResponseEntity<?> checkoutOrder(@RequestBody OrderDto orderDto) {
+        System.out.println("ipwkcv,mrt4e"+orderDto);
  
        orderService.checkoutOrder(orderDto);
         Map<String, Object> response = new HashMap();
         response.put("success", true);
         response.put("message", "Order checked out successfully");
         response.put("status", Response.SC_OK);
-        return new ResponseEntity<Map>(HttpStatus.OK);
+        response.put("data", "");
+        return new ResponseEntity<Map>(response,HttpStatus.OK);
         
         
     }
