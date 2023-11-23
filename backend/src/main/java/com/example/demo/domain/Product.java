@@ -16,7 +16,7 @@ public class Product {
         this.reviews = new ArrayList<>();
     }
 
-    public Product(int number, String name, String description, double price, int quantity) {
+    public Product(Integer number, String name, String description, double price, int quantity) {
         this.number = number;
         this.name = name;
         this.description = description;

@@ -2,14 +2,18 @@ package com.example.demo.services;
 
 import java.util.*;
 
-import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
+import com.example.demo.dto.OrderDto;
+
+import com.example.demo.domain.Order;
 
 public interface OrderService {
 
     public List<OrderDto> getOrders();
 
-    public OrderDto updateOrderStatus(String status, int orderId);
+    public void updateOrderStatus(String status, String orderId);
 
     public void checkoutOrder(OrderDto orderDto);
+
+    //public OrderDto findById(String orderId);
 
 }

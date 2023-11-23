@@ -1,7 +1,7 @@
 package com.example.demo.domain;
 
 public class OrderItem {
-    private Long productId;
+    private Integer productId;
     private String name;
     private Double price;
     private String description;
@@ -11,7 +11,7 @@ public class OrderItem {
 
     }
 
-    public OrderItem(Long productId, String name, Double price, String description, Integer quantity) {
+    public OrderItem(Integer productId, String name, Double price, String description, Integer quantity) {
         this.productId = productId;
         this.name = name;
         this.price = price;
@@ -19,7 +19,7 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public Long getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
@@ -39,7 +39,7 @@ public class OrderItem {
         return quantity;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 

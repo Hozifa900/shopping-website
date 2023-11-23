@@ -1,11 +1,13 @@
 package com.example.demo.services.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.Product;
+import com.example.demo.domain.Review;
 import com.example.demo.dto.ProductDto;
 import com.example.demo.dto.ReviewDto;
 import com.example.demo.repository.ProductRepository;
@@ -32,26 +34,83 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void removeProduct(int productId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeProduct'");
+        productRepository.deleteByNumber(productId);
+
     }
 
     @Override
-    public ProductDto updateProduct(ProductDto productDto, int productId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateProduct'");
+    public ProductDto updateProduct(ProductDto productDto, int productNumber) {
+        Product product = productRepository.findByNumber(productNumber);
+        if (product != null) {
+            List<Review> reviews = new ArrayList<>();
+            if (productDto.reviews() != null) {
+            productDto.reviews().forEach(review -> {
+                reviews.add(new Review(
+                        review.name(),
+                        review.review(),
+                        review.rate()
+
+                ));
+            });
+        }
+            product = new Product(
+                    productDto.number(),
+                    productDto.name(),
+                    productDto.description(),
+                    productDto.price(),
+                    productDto.quantity()
+
+            );
+            product.setReviews(reviews);
+            productRepository.save(product);
+
+        }
+        return productDto;
     }
 
     @Override
     public List<ProductDto> getProducts() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProducts'");
+        // get all products from database
+        List<Product> products = productRepository.findAll();
+        // create a list of productDtos then convert each product to productDto
+        List<ProductDto> productDtos = new ArrayList<>();
+        products.forEach(product -> {
+            // create a list of reviewDtos then convert each review to reviewDto
+            List<ReviewDto> reviewDtos = new ArrayList<>();
+            product.getReviews().forEach(review -> {
+                ReviewDto innerReview = new ReviewDto(
+                        review.getName(),
+                        review.getReview(),
+                        review.getRate());
+                reviewDtos.add(innerReview);
+            });
+
+            // convert product to productDto
+            productDtos.add(new ProductDto(
+                    product.getNumber(),
+                    product.getName(),
+                    product.getDescription(),
+                    product.getPrice(),
+                    product.getQuantity(),
+                    reviewDtos));
+        });
+
+        return productDtos;
+
     }
 
     @Override
-    public ReviewDto addReviewToProduct(int productId, ReviewDto reviewDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addReviewToProduct'");
+    public ReviewDto addReviewToProduct(int productNumber, ReviewDto reviewDto) {
+        Product product = productRepository.findByNumber(productNumber);
+        if (product != null) {
+
+            product.addReview(new Review(
+                    reviewDto.name(),
+                    reviewDto.review(),
+                    reviewDto.rate()));
+            productRepository.save(product);
+        }
+        return reviewDto;
     }
 
 }
