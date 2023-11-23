@@ -9,9 +9,22 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import { useState } from "react";
+
 import "./App.css";
 import Header from "./components/Header/Header";
+import Home from "./pages/Home/Home";
+import Cart from "./pages/Cart/Cart";
+import CheckOut from "./pages/CheckOut/CheckOut";
+import Payment from "./pages/Payment/Payment";
+import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
 
 function App() {
   const [bookList, setBookList] = useState([
@@ -40,23 +53,18 @@ function App() {
     <div className="App">
       <Header />
       <br />
-      <Button variant="success">Success</Button>
       <br />
-      <Container>
-        <Row>
-          <Col xs={12} md={12} className="container">
-            xs=12 md=8
-          </Col>
-          <Col
-            xs={12}
-            md={12}
-            className="container"
-            style={{ backgroundColor: "red" }}
-          >
-            xs=6 md=4
-          </Col>
-        </Row>
-      </Container>
+      <br />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/check" element={<CheckOut />} />
+        <Route path="/check-payment" element={<Payment />} />
+        <Route path="/check-place" element={<PlaceOrder />} />
+      </Routes>
+      <br />
+      {/* <Button variant="success">Success</Button> */}
+      <br />
     </div>
   );
 }
