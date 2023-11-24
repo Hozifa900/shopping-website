@@ -7,9 +7,15 @@ import java.util.Map;
 import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.CrossOrigin;
+=======
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+>>>>>>> da8a0d3576d293124dc7a040a14c881dde1daae4
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.OrderDto;
 import com.example.demo.services.OrderService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -48,16 +56,29 @@ public class OrderController {
         response.put("success", true);
         response.put("message", "Order status updated successfully");
         response.put("status", Response.SC_OK);
+<<<<<<< HEAD
         response.put("data", "");
         return new ResponseEntity<Map>(response, HttpStatus.OK);
 
+=======
+        response.put("data", null);
+        return new ResponseEntity<Map>(response,HttpStatus.OK);
+        
+>>>>>>> da8a0d3576d293124dc7a040a14c881dde1daae4
     }
 
     @PostMapping("")
+<<<<<<< HEAD
     public ResponseEntity<?> checkoutOrder(@RequestBody OrderDto orderDto) {
         System.out.println("ipwkcv,mrt4e" + orderDto);
 
         orderService.checkoutOrder(orderDto);
+=======
+    public ResponseEntity<?> checkoutOrder(@Valid @RequestBody OrderDto orderDto) {
+        System.out.println("ipwkcv,mrt4e"+orderDto);
+ 
+       orderService.checkoutOrder(orderDto);
+>>>>>>> da8a0d3576d293124dc7a040a14c881dde1daae4
         Map<String, Object> response = new HashMap();
         response.put("success", true);
         response.put("message", "Order checked out successfully");
@@ -67,4 +88,26 @@ public class OrderController {
 
     }
 
+<<<<<<< HEAD
+=======
+      @ExceptionHandler(Exception.class)
+        public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        System.out.println("******************************************");
+        System.out.println(ex.getBindingResult().getFieldErrors());
+        Map<String, Object> fieldError = new HashMap<>();
+        List<FieldError> fieldErrors= ex.getBindingResult().getFieldErrors();
+        for (FieldError error : fieldErrors) {
+            fieldError.put(error.getField(), error.getDefaultMessage());
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("Success", false);
+        map.put("data", null);
+        map.put("status", HttpStatus.BAD_REQUEST);
+        map.put("message", "Validation error");
+        map.put("fieldError", fieldError);
+        return new ResponseEntity<Object>(map,HttpStatus.BAD_REQUEST);
+    }
+ 
+>>>>>>> da8a0d3576d293124dc7a040a14c881dde1daae4
 }

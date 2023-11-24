@@ -10,10 +10,10 @@ public interface ProductService {
 
     public void removeProduct(int productId);
 
-    public ProductDto updateProduct(ProductDto productDto, int productId);
+    public ProductDto updateProduct(ProductDto productDto, Integer productId);
 
     public List<ProductDto> getProducts();
 
-    public ReviewDto addReviewToProduct(int productId, ReviewDto reviewDto);
+    public ReviewDto addReviewToProduct(Integer productId, ReviewDto reviewDto);
 
 }
