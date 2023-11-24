@@ -39,8 +39,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto updateProduct(ProductDto productDto, int productNumber) {
+    public ProductDto updateProduct(ProductDto productDto, Integer productNumber) {
         Product product = productRepository.findByNumber(productNumber);
+       // System.out.println("product687" + product);
         if (product != null) {
             List<Review> reviews = new ArrayList<>();
             if (productDto.reviews() != null) {
@@ -100,8 +101,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ReviewDto addReviewToProduct(int productNumber, ReviewDto reviewDto) {
+    public ReviewDto addReviewToProduct(Integer productNumber, ReviewDto reviewDto) {
+         System.out.println("product678"  +productNumber+reviewDto);
         Product product = productRepository.findByNumber(productNumber);
+       
         if (product != null) {
 
             product.addReview(new Review(
@@ -109,6 +112,7 @@ public class ProductServiceImpl implements ProductService {
                     reviewDto.review(),
                     reviewDto.rate()));
             productRepository.save(product);
+            System.out.println("productafter" + product);
         }
         return reviewDto;
     }
