@@ -14,6 +14,7 @@ export default function Payment() {
     setPayment({ ...payment, [e.target.name]: e.target.value });
   };
   const handleSubmit = () => {
+    payment.expriationDate = payment.expirationDate.replace(/\//g, "-");
     dispatch({ type: "ADD_PAYMENT", payload: payment });
     navigate("/check-place");
   };

@@ -41,15 +41,15 @@ const productList = [
 ];
 const cartItems = [];
 
-const showCart = false;
+const admin = false;
 
 const shoppingStore = (
   state = {
     productList: productList,
     cart: cartItems,
     user: {},
-    payment: {},
-    showCart: showCart,
+    paymentInfo: {},
+    isAdmin: admin,
   },
   action
 ) => {
@@ -79,6 +79,11 @@ const shoppingStore = (
         ...state,
         cart: state.cart.filter((x) => x.productId !== action.payload),
       };
+    case "CLEAR_CART":
+      return {
+        ...state,
+        cart: [],
+      };
     case "UPDATE_QUANTITY":
       return {
         ...state,
@@ -94,11 +99,11 @@ const shoppingStore = (
         productList: action.payload,
       };
 
-    case "SHOW_CART":
+    case "SET_ADMIN":
       console.log("action.payload", action.payload);
       return {
         ...state,
-        showCart: action.payload,
+        isAdmin: action.payload,
       };
     case "ADD_USER":
       return {
@@ -108,7 +113,7 @@ const shoppingStore = (
     case "ADD_PAYMENT":
       return {
         ...state,
-        payment: action.payload,
+        paymentInfo: action.payload,
       };
 
     default:

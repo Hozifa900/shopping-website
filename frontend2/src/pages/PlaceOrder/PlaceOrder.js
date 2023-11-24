@@ -1,20 +1,40 @@
 import React from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Modal } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { addOrder } from "../../services/orderService";
+import { useNavigate } from "react-router-dom";
 
 export default function PlaceOrder() {
   const cartItems = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
-  const payment = useSelector((state) => state.payment);
+  const payment = useSelector((state) => state.paymentInfo);
+  const [show, setShow] = React.useState(false);
+  const [popUpMessage, setPopUpMessage] = React.useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    addOrder({ status: "placed", user, payment, cartItems })
+  const handleSubmit = async () => {
+    addOrder({
+      status: "placed",
+      user,
+      paymentInfo: payment,
+      orderItems: cartItems,
+    })
       .then((res) => {
-        console.log("the result is: ", res);
+        setShow(true);
+        setPopUpMessage(" Your order has been placed! Thank you!");
+        setTimeout(() => {
+          setShow(false);
+          navigate("/my-orders");
+        }, 2000);
+        // then clear the cart
+        dispatch({ type: "CLEAR_CART" });
       })
       .catch((err) => {
-        console.log("the error is: ", err);
+        setShow(true);
+        setPopUpMessage(" Something wrong! Try later!");
+        setTimeout(() => {
+          setShow(false);
+        }, 2000);
       });
   };
 
@@ -117,6 +137,17 @@ export default function PlaceOrder() {
           </Col>
         </Row>
       </Container>
+
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{popUpMessage}</Modal.Title>
+        </Modal.Header>
+      </Modal>
     </div>
   );
 }

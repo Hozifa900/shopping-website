@@ -3,7 +3,7 @@ import { Button, Modal, Nav, Navbar, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "./CartItem/CartItem";
 
-export default function Cart() {
+export default function PopUpMessage() {
   const dispatch = useDispatch();
   const handleClose = () =>
     dispatch({
