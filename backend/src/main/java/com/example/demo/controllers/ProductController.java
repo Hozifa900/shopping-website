@@ -6,12 +6,9 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.CrossOrigin;
-=======
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
->>>>>>> da8a0d3576d293124dc7a040a14c881dde1daae4
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,8 +34,8 @@ public class ProductController {
 
     @PostMapping("")
     public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDto productDto) {
-        
-        System.out.println("ipwkcv,mrt4e"+productDto);
+
+        System.out.println("ipwkcv,mrt4e" + productDto);
         ProductDto newProduct = productService.addProduct(productDto);
         Map<String, Object> response = new HashMap();
         response.put("success", true);
@@ -58,8 +55,6 @@ public class ProductController {
         response.put("message", "Products fetched successfully");
         response.put("status", Response.SC_OK);
         response.put("data", products);
-
-<<<<<<< HEAD
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 
@@ -77,8 +72,21 @@ public class ProductController {
 
     }
 
+    @PostMapping("/{productNumber}")
+    public ResponseEntity<?> addReview(@Valid @RequestBody ReviewDto reviewDto, @PathVariable Integer productNumber) {
+        ReviewDto newReview = productService.addReviewToProduct(productNumber, reviewDto);
+        Map<String, Object> response = new HashMap();
+        response.put("success", true);
+        response.put("message", "Review added successfully");
+        response.put("status", Response.SC_OK);
+        response.put("data", newReview);
+
+        return new ResponseEntity<Map>(response, HttpStatus.OK);
+
+    }
+
     @PutMapping("/{productNumber}")
-    public ResponseEntity<?> updateProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductDto productDto) {
         ProductDto newProduct = productService.updateProduct(productDto, productDto.number());
         Map<String, Object> response = new HashMap();
         response.put("success", true);
@@ -101,56 +109,14 @@ public class ProductController {
 
         return new ResponseEntity<Map>(response, HttpStatus.OK);
 
-=======
-    
-        return new ResponseEntity<Map>(response, HttpStatus.OK);}
+    }
 
-
-        @PostMapping("/{productNumber}")
-        public ResponseEntity<?> addReview(@Valid @RequestBody ReviewDto reviewDto,@PathVariable Integer productNumber) {
-            ReviewDto newReview = productService.addReviewToProduct(productNumber, reviewDto);
-            Map<String, Object> response = new HashMap();
-            response.put("success", true);
-            response.put("message", "Review added successfully");
-            response.put("status", Response.SC_OK);
-            response.put("data", newReview);
-    
-            return new ResponseEntity<Map>(response, HttpStatus.OK);
-    
-        }
-
-        @PutMapping("/{productNumber}")
-        public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductDto productDto) {
-            ProductDto newProduct = productService.updateProduct(productDto, productDto.number());
-            Map<String, Object> response = new HashMap();
-            response.put("success", true);
-            response.put("message", "Product added successfully");
-            response.put("status", Response.SC_OK);
-            response.put("data", newProduct);
-    
-            return new ResponseEntity<Map>(response, HttpStatus.OK);
-    
-        }
-        @DeleteMapping("/delete/{productNumber}")
-        public ResponseEntity<?> deleteProduct(@PathVariable int productNumber) {
-            productService.removeProduct(productNumber);
-            Map<String, Object> response = new HashMap();
-            response.put("success", true);
-            response.put("message", "Product deleted successfully");
-            response.put("status", Response.SC_OK);
-            response.put("data", null);
-    
-            return new ResponseEntity<Map>(response, HttpStatus.OK);
-    
-        }
-
-
-          @ExceptionHandler(Exception.class)
-        public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
         System.out.println("******************************************");
         System.out.println(ex.getBindingResult().getFieldErrors());
         Map<String, Object> fieldError = new HashMap<>();
-        List<FieldError> fieldErrors= ex.getBindingResult().getFieldErrors();
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         for (FieldError error : fieldErrors) {
             fieldError.put(error.getField(), error.getDefaultMessage());
         }
@@ -161,7 +127,6 @@ public class ProductController {
         map.put("status", HttpStatus.BAD_REQUEST);
         map.put("message", "Validation error");
         map.put("fieldError", fieldError);
-        return new ResponseEntity<Object>(map,HttpStatus.BAD_REQUEST);
->>>>>>> da8a0d3576d293124dc7a040a14c881dde1daae4
+        return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
     }
 }
