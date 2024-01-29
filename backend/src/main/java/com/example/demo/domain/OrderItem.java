@@ -8,7 +8,6 @@ public class OrderItem {
     private Integer quantity;
 
     public OrderItem() {
-
     }
 
     public OrderItem(Integer productId, String name, Double price, String description, Integer quantity) {

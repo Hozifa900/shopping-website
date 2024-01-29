@@ -7,7 +7,6 @@ public class PaymentInfo {
     private String type;
     private LocalDate expirationDate;
     private String code;
-
     public PaymentInfo() {
     }
 

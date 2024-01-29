@@ -13,8 +13,6 @@ import com.example.demo.services.ProductService;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    // @Autowired
-    // private ProductRepository productRepository;
 
     @Override
     public ProductDto addProduct(ProductDto productDto) {

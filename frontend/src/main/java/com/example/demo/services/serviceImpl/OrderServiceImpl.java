@@ -10,8 +10,6 @@ import com.example.demo.services.OrderService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    // @Autowired
-    // private OrderRepository orderRepository;
 
     @Override
     public List<OrderDto> getOrders() {
