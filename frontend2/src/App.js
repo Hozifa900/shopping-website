@@ -31,7 +31,7 @@ import AdminOrders from "./admin/Orders/Orders";
 import AdminHeader from "./components/AdminHeader/AdminHeader";
 import Products from "./admin/Products/Products";
 import Review from "./pages/Review/Review";
-
+npm
 function App() {
   const isAdmin = useSelector((state) => state.isAdmin);
   return (
@@ -41,6 +41,7 @@ function App() {
       <br />
       <br />
       <br />
+cd
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />

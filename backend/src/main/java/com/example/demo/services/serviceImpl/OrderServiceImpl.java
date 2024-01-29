@@ -21,6 +21,7 @@ import com.example.demo.domain.Product;
 import com.example.demo.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -29,9 +30,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductRepository productRepository;
 
+
     @Override
     public List<OrderDto> getOrders() {
-        List<Order> orders = orderRepository.findAll();
+        List<Order> orders = orderRepository.findAll(Sort.by(Sort.Order.desc("id")));
         List<OrderDto> orderDtos = new ArrayList<>();
 
         orders.forEach(order -> {
@@ -46,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
                         orderItem.getDescription());
                 orderItemDtos.add(orderItemDto);
             });
+
             UserDto userDto = new UserDto(
                     order.getUser().getName(),
                     order.getUser().getEmail(),
@@ -53,6 +56,7 @@ public class OrderServiceImpl implements OrderService {
                     order.getUser().getCity(),
                     order.getUser().getStreet(),
                     order.getUser().getZip());
+
             PaymentInfoDto paymentInfoDto = new PaymentInfoDto(
                     order.getPaymentInfo().getCardNumber(),
                     order.getPaymentInfo().getType(),
@@ -72,8 +76,52 @@ public class OrderServiceImpl implements OrderService {
         return orderDtos;
     }
 
+
+//    @Override
+//    public List<OrderDto> getOrders() {
+//        List<Order> orders = orderRepository.findAll();
+//        List<OrderDto> orderDtos = new ArrayList<>();
+//
+//        orders.forEach(order -> {
+//            List<OrderItemDto> orderItemDtos = new ArrayList<>();
+//
+//            order.getOrderItems().forEach(orderItem -> {
+//                OrderItemDto orderItemDto = new OrderItemDto(
+//                        orderItem.getProductId(),
+//                        orderItem.getName(),
+//                        orderItem.getPrice(),
+//                        orderItem.getQuantity(),
+//                        orderItem.getDescription());
+//                orderItemDtos.add(orderItemDto);
+//            });
+//            UserDto userDto = new UserDto(
+//                    order.getUser().getName(),
+//                    order.getUser().getEmail(),
+//                    order.getUser().getPhone(),
+//                    order.getUser().getCity(),
+//                    order.getUser().getStreet(),
+//                    order.getUser().getZip());
+//            PaymentInfoDto paymentInfoDto = new PaymentInfoDto(
+//                    order.getPaymentInfo().getCardNumber(),
+//                    order.getPaymentInfo().getType(),
+//                    order.getPaymentInfo().getExpirationDate(),
+//                    order.getPaymentInfo().getCode());
+//
+//            OrderDto orderDto = new OrderDto(
+//                    order.getId(),
+//                    order.getStatus(),
+//                    userDto,
+//                    paymentInfoDto,
+//                    orderItemDtos);
+//
+//            orderDtos.add(orderDto);
+//        });
+//
+//        return orderDtos;
+//    }
+
     @Override
-    public void updateOrderStatus(String status, String orderId) {
+    public void updateOrderStatus( String orderId, String status) {
         Order order = orderRepository.findOrderById(orderId);
         if (order != null) {
             order.setStatus(status);
@@ -96,6 +144,7 @@ public class OrderServiceImpl implements OrderService {
                 orderDto.user().city(),
                 orderDto.user().street(),
                 orderDto.user().zip());
+
         // convert paymentInfoDto to paymentInfo
         PaymentInfo newPaymentInfo = new PaymentInfo(
                 orderDto.paymentInfo().cardNumber(),
